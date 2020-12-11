@@ -1,0 +1,52 @@
+函数
+QSpinBox.setMinimum()        #设定最大值
+QSpinBox.setMaximum()        #设定最小值
+QSpinBox.setRange(min,max)   #设定范围
+QSpinBox.maximum()           #获取最大值
+QSpinBox.minimum()           #获取最小值
+QSpinBox.setWrapping(True)        #启用数值循环
+QSpinBox.wrapping()               #是否启用数值循环
+QSpinBox.setWrapping()            #设定步长
+QSpinBox.singleStep()             #获取步长——>str
+QSpinBox.setPrefix()             #设定前缀
+QSpinBox.setSuffix()             #设定后缀
+QSpinBox.prefix()                #获取前缀——>str
+QSpinBox.suffix()                #获取后缀——>str
+加了前缀或后缀只改变数值，前后缀不变化
+QSpinBox.setSpecialValueText('')                #设置最小值对应文本
+QSpinBox.specialValueText()                     #获取最小值对应文本——>str
+QSpinBox.setDisplayIntegerBase(int)                #设置进制
+QSpinBox.displayIntegerBase()                      #获取进制——>str
+QSpinBox.setValue()          #设定值
+QSpinBox.value()             #获取int的值
+
+自定义展示格式
+class SB(QSpinBox):
+    def textFromValue(self, v: int):   #自定义展示格式
+        week = ['星期日','星期一','星期二','星期三','星期四','星期五','星期六',]
+        weekday = week[v]
+        return weekday
+
+class Window(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.UI_SetUp()
+    def UI_SetUp(self):
+        sb = SB(self)      #调用的是自定义的QSpinBox控件
+        sb.resize(100,30)
+        sb.move(100,100)
+        sb.setRange(0,6)
+        self.sb = sb
+        pass
+        
+ 信号
+ QSpinBox.editingFinished()     结束编辑
+ QSpinBox.valueChanged()        它传递有int类型的信号
+ QSpinBox.valueChanged[str]()   还可以重构一下发送字符串类型的数据，发送字符串时是按照当前显示的状态发送的，包含有前后缀以及自定义的显示类型。
+ 
+ 信号写法如下
+ self.connect(某个QSpinBox, QtCore.SIGNAL("valueChanged(int)") ,lambda : 对应的函数)
+ 
+ 可以在实际使用中，默认最小值还是0
+ 然后读取如一个当前值，比如人物属性加点，读取到生命值为10
+ 读取后把10用self.hp.setMinimum(self.hp_now)写入，这样生命值加点就做到了只能往上加不能减少到10点以下
