@@ -1,0 +1,24 @@
+QComboBox的函数
+
+addItem()：向集合中添加字符串
+addItems()：以list的形式添加多个项目
+Clear()：清除所有项目
+count()：计算项目总数
+currentText()：取回当前所选项目的文本
+itemText()：显示属于特定索引的文本
+currentIndex()：当前所选项的索引
+setItemText()：改变特定索引的文本
+
+QComboBox的信号
+
+activated()：用户选择了某项
+currentIndexChanged()：当前索引被用户或程序改变
+highlighted()：某项被高亮
+
+索引是从0开始的，所以默认currentIndex()=0
+
+如果增加信号，connect的写法如下：
+self.connect(某个下拉框控件, QtCore.SIGNAL("currentIndexChanged(int)"), lambda: 对应的函数)
+
+比如实时判断下拉框drag的变化，然后有个update的函数
+self.connect(self.drag, QtCore.SIGNAL("currentIndexChanged(int)"), lambda: self.update())
